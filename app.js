@@ -1,8 +1,71 @@
-const data = {
-    read: { python: 40, spark: 70, llm: 55 },
-    code: { python: 60, spark: 80, llm: 30 },
-    quiz: { python: 90, spark: 50, llm: 75 }
-};
+// const data = {
+//     read: { python: 40, spark: 70, llm: 55 },
+//     code: { python: 60, spark: 80, llm: 30 },
+//     quiz: { python: 90, spark: 50, llm: 75 }
+// };
+
+let rawData = `[ReadScore]:&&&rohitagarwal :STAGE: 1
+[CodeScore]:|python->40||spark->20|
+[ReadScore]:|python->90||trending->10||Analytics->10||AgenticAI->10|`;
+
+function getLatestBlock(rawData, type) {
+    let lines = rawData.split("\n");
+    let matches = [];
+    let marker = `[${type}Score]:`;
+
+    lines.forEach(line => {
+        let trimmed = line.trim();
+        if (trimmed.startsWith(marker)) {
+            matches.push(trimmed.substring(marker.length));
+        }
+    });
+
+    if (matches.length === 0) return "";
+    return matches[matches.length - 1];
+}
+
+function parseBlock(block) {
+    if (!block) block = "";
+    let parts = block.split("|");
+
+    let temp = {};
+
+    parts.forEach(part => {
+        if (part.includes("->")) {
+            let [key, value] = part.split("->");
+
+            key = key.trim().toLowerCase();
+            value = parseInt(value.trim());
+
+            if (!isNaN(value)) {
+                temp[key] = value;
+            }
+        }
+    });
+
+    return {
+        python: temp.python || 0,
+        spark: temp.spark || 0,
+        llm: temp.llm || 0,
+    };
+}
+
+
+function convertRawToFinal(rawData) {
+    let readBlock = getLatestBlock(rawData, "Read");
+    let codeBlock = getLatestBlock(rawData, "Code");
+    let quizBlock = getLatestBlock(rawData, "Quiz");
+
+    return {
+        read: parseBlock(readBlock),
+        code: parseBlock(codeBlock),
+        quiz: parseBlock(quizBlock)
+    };
+}
+
+
+
+const data = convertRawToFinal(rawData)
 
 
 
