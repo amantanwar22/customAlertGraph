@@ -1,18 +1,18 @@
 1) Trigger point 
-Graph alert is triggered at line 59 in app.js
+Graph alert is triggered at line 122 in app.js
 ```js
 $("#testDataAlertBtn").click(function () {
 ```
 
 2) Function called (Graph renderer)
-This function is responsible for generating each graph's html and is at line 9 in app.js
+This function is responsible for generating each graph's html and is at line 72 in app.js
 This function basically loops through Python, Spark, and LLM values and creates the horizontal bars.
 ```js
 function renderGraph(title, graphData)
 ```
 
 3) Popup control functions 
-We display and hide our popup using these 2 functions at line 41 and 45 in app.js
+We display and hide our popup using these 2 functions at line 104 and 109 in app.js
 ```js
 function openDataAlert(htmlContent)
 ```
@@ -21,7 +21,7 @@ function closeDataAlert()
 ```
 
 4) Last is our bars animation
-The animation that expands our bar from 0% to its final width is at line 69 in app.js
+The animation that expands our bar from 0% to its final width is at line 132 in app.js
 ```js
 setTimeout(() => {
         $(".barFill").each(function () {
