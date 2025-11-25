@@ -68,6 +68,21 @@ function convertRawToFinal(rawData) {
 const data = convertRawToFinal(rawData)
 
 
+function getGlobalMax(data) {
+    let allValues = [];
+
+    for (let section in data) {
+        for (let skill in data[section]) {
+            allValues.push(data[section][skill]);
+        }
+    }
+    
+    return Math.max(...allValues, 1);
+}
+
+const GLOBAL_MAX = getGlobalMax(data);
+
+
 
 function renderGraph(title, graphData) {
     let colors = {
@@ -83,13 +98,15 @@ function renderGraph(title, graphData) {
 
     for (let skill in graphData) {
         let value = graphData[skill];
+        let scaledWidth = (value / GLOBAL_MAX) * 100;
+
         html += `
             <div class="barRow">
                 <div class="barLabel">${skill.toUpperCase()} : ${value}</div>
                 <div class="barOuter">
-                    <div class="barFill" 
+                    <div class="barFill"
                          style="width:0%; background:${colors[skill]};"
-                         data-width="${value}%"></div>
+                         data-width="${scaledWidth}%"></div>
                 </div>
             </div>
         `;
