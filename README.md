@@ -1,5 +1,5 @@
 1) Trigger point 
-Graph alert is triggered at line 122 in app.js
+Graph alert is triggered at line 139 in app.js
 ```js
 $("#testDataAlertBtn").click(function () {
 ```
